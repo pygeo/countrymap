@@ -65,6 +65,12 @@ class TestCountrymap(unittest.TestCase):
         M.draw()
         M.draw_details(['France', 'Germany','United Kingdom','Netherlands', 'Estonia', 'Spain'], color='tomato')
 
+    def test_getnames(self):
+        M = Map(region='europe')
+        M.read_shape()
+        res = M.get_country_names()
+        print res
+        self.assertTrue('Germany' in res)
 
 if __name__ == '__main__':
     unittest.main()

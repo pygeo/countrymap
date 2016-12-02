@@ -66,6 +66,15 @@ class Map(object):
 
         # still need to implement unzi here
 
+    def get_country_names(self):
+        """
+        returns a list with country names
+        """
+        l = []
+        for record in self.records:
+            l.append(record[4])
+        return l
+
 
     def read_shape(self, shpname=None):
         if shpname is None:
