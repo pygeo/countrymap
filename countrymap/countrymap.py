@@ -52,7 +52,8 @@ class Map(object):
 
     def _set_default_regions(self):
         r_eur = {'lon1' : -30., 'lon2' : 35., 'lat1' : 30., 'lat2' : 72.}
-        self.regions = {'europe' : r_eur}
+        r_world = {'lon1' : -179., 'lon2' : 179., 'lat1' : -89., 'lat2' : 89.}
+        self.regions = {'europe' : r_eur, 'world' : r_world}
 
     def _download_shape(self):
         """
@@ -99,7 +100,7 @@ class Map(object):
         self.ax = fig.add_subplot(111)
 
         projection='merc'
-        llcrnrlat=-80
+        llcrnrlat=-90
         urcrnrlat=90
         llcrnrlon=-180
         urcrnrlon=180
