@@ -96,11 +96,11 @@ class Map(object):
         self.records = r.records()
 
 
-    def draw(self):
-        self._draw_basic()
+    def draw(self, projection='merc'):
+        self._draw_basic(projection=projection)
 
 
-    def _draw_basic(self):
+    def _draw_basic(self, projection='merc'):
         """
         This functions draws and returns a map of Portugal, either just of the mainland or including the Azores and Madeira islands.
         """
@@ -108,15 +108,16 @@ class Map(object):
         fig = plt.figure(figsize=(15.7,12.3))
         self.ax = fig.add_subplot(111)
 
-        projection='merc'
+
         llcrnrlat=-90
         urcrnrlat=90
         llcrnrlon=-180
         urcrnrlon=180
         resolution='i'
+        lon_0 = 0.
 
         m = Basemap(projection=projection, llcrnrlat=self.y1, urcrnrlat=self.y2, llcrnrlon=self.x1,
-                    urcrnrlon=self.x2, resolution=resolution, ax=self.ax)
+                    urcrnrlon=self.x2, resolution=resolution, ax=self.ax, lon_0 = lon_0)
         m.drawcoastlines()
         m.drawmapboundary()
         #m.drawcountries()
