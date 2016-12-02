@@ -1,6 +1,17 @@
 """
 """
 
+import shapefile
+import os
+
+import wget
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+import numpy as np
+from matplotlib.collections import LineCollection
+
+
 
 class Map(object):
     def __init__(self, region=None):
@@ -11,6 +22,11 @@ class Map(object):
 
         region : str or user defined dictionary
         """
+        self._set_region(region)
+        self._default_shp = 'TM_WORLD_BORDERS-0.3.shp'
+
+
+    def _set_region(self, region):
         assert region is not None, 'Region needs to be specified!'
         self._set_default_regions()
         if type(region) is str:
@@ -38,12 +54,31 @@ class Map(object):
         r_eur = {'lon1' : -30., 'lon2' : 35., 'lat1' : 30., 'lat2' : 72.}
         self.regions = {'europe' : r_eur}
 
+    def _download_shape(self):
+        """
+        download default shapefile
+
+        for some reason this does not work in automatic mode so far ...
+        """
+        url = 'http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip'
+        filename = wget.download(url)
+
+        # still need to implement unzi here
 
 
+    def read_shape(self, shpname=None):
+        if shpname is None:
+            # set default shapename
+            shpname = self._default_shp
 
+        # check if shapefile existing
+        if not os.path.exists(shpname):
+            # in case that default is missing, try to download
+            if shpname == self._default_shp:
+                pass
+            else:
+                assert False, 'Can not continue with processing as shapefile not existing!'
 
-
-    def read_shape(self, shpname):
         # read shapefile
         r = shapefile.Reader(shpname)
         #print r.fields
